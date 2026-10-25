@@ -58,4 +58,7 @@ mysqli_close($connect);
     <input type="text" placeholder="copies" name="copies">
     <button name="insert">insert</button>
 </form>
+    <form method="post" action="logout.php">
+    <button name="logout">logout</button>
+    </form>
 </html>
