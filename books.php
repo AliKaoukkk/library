@@ -16,7 +16,8 @@ if(isset($_POST["insert"])){
     $_name = $_POST["author"];
     $_title = $_POST["title"];
     $_copies = $_POST["copies"];
-    $sql = "insert into books (title, author, copies) values ('$_title','$_name',$_copies)";
+    $_owner = $_SESSION["username"];
+    $sql = "insert into books (title, author, copies, owner) values ('$_title','$_name',$_copies, '$_owner')";
     mysqli_query($connect, $sql) or die(mysqli_error($connect));
 }
 
