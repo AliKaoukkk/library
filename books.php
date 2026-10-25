@@ -1,12 +1,9 @@
 <?php
-session_start();
+require "auth.php";
 require "db.php";
 /** @var mysqli $connect */
 mysqli_report(MYSQLI_REPORT_OFF);
-if(!isset($_SESSION["username"])){
-    header("location: login.php");
-    exit;
-}
+
 if(isset($_POST["delete"])){
     $delete = $_POST["delete"];
     $user = $_SESSION["username"];
