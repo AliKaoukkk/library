@@ -8,7 +8,9 @@ if(!isset($_SESSION["username"])){
     exit;
 }
 if(isset($_POST["delete"])){
-    $sql = "delete from books where id =". $_POST["delete"];
+    $delete = $_POST["delete"];
+    $user = $_SESSION["username"];
+    $sql = "delete from books where id = $delete AND owner = '$user'";
     mysqli_query($connect, $sql) or die(mysqli_error($connect));
 }
 if(isset($_POST["insert"])){
@@ -37,7 +39,11 @@ while($row = mysqli_fetch_array($result)){
     echo "<td>$row[title]</td>";
     echo "<td> $row[author]</td>";
     echo "<td>$row[copies]</td>";
-    echo "<td><form method='post'><button name='delete' value='$row[id]'>delete</button> </form> </td>";
+    if($row["owner"] == $_SESSION["username"] ) {
+        echo "<td><form method='post'><button name='delete' value='$row[id]'>delete</button> </form> </td>";
+    }else{
+        echo "<td> </td>";
+    }
     echo "</tr>";
 }
 echo "</table>";
