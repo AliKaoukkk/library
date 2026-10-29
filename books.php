@@ -7,8 +7,10 @@ mysqli_report(MYSQLI_REPORT_OFF);
 if(isset($_POST["delete"])){
     $delete = $_POST["delete"];
     $user = $_SESSION["username"];
-    $sql = "delete from books where id = $delete AND owner = '$user'";
-    mysqli_query($connect, $sql) or die(mysqli_error($connect));
+    $sql = "delete from books where id = ? AND owner = ?";
+    $stmt = mysqli_prepare($connect, $sql) or die(mysqli_error($connect));
+    mysqli_stmt_bind_param($stmt, "is", $delete,$user);
+    mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
 }
 if(isset($_POST["insert"])){
 
@@ -16,8 +18,10 @@ if(isset($_POST["insert"])){
     $_title = $_POST["title"];
     $_copies = $_POST["copies"];
     $_owner = $_SESSION["username"];
-    $sql = "insert into books (title, author, copies, owner) values ('$_title','$_name',$_copies, '$_owner')";
-    mysqli_query($connect, $sql) or die(mysqli_error($connect));
+    $sql = "insert into books (title, author, copies, owner) values (?,?,?,?)";
+    $stmt = mysqli_prepare($connect,$sql) or die(mysqli_error($connect));
+    mysqli_stmt_bind_param($stmt, "ssis", $_title,$_name,$_copies, $_owner);
+    mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
 }
 
 echo "hello " . $_SESSION["username"];
