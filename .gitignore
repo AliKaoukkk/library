@@ -1,2 +1,5 @@
 db.php
 uploads/
+
+covers/*
+!covers/.gitkeep
