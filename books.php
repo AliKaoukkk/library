@@ -24,7 +24,7 @@ if(isset($_POST["insert"])){
     mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
 }
 
-echo "hello " . $_SESSION["username"];
+echo "hello " . htmlspecialchars($_SESSION["username"]);
 echo "<br>";
 
 $sql = "select * from books";
@@ -37,8 +37,8 @@ echo "<th>copies</th>";
 echo "</tr>";
 while($row = mysqli_fetch_array($result)){
     echo "<tr>";
-    echo "<td>$row[title]</td>";
-    echo "<td> $row[author]</td>";
+    echo "<td>". htmlspecialchars($row["title"])."</td>";
+    echo "<td>". htmlspecialchars($row["author"]) ."</td>";
     echo "<td>$row[copies]</td>";
     if($row["owner"] == $_SESSION["username"] ) {
         echo "<td><form method='post'><button name='delete' value='$row[id]'>delete</button> </form> </td>";
