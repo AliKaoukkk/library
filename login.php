@@ -4,8 +4,11 @@ require "db.php";
 mysqli_report(MYSQLI_REPORT_OFF);
     if(isset($_POST["submit"])) {
         $name = $_POST["username"];
-        $sql = "SELECT * FROM users WHERE username = '$name'";
-        $result = mysqli_query($connect, $sql) or die(mysqli_error($connect));
+        $sql = "SELECT * FROM users WHERE username = ?";
+        $stmt = mysqli_prepare($connect, $sql) or die (mysqli_error($connect));
+        mysqli_stmt_bind_param($stmt, "s", $name);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $row = mysqli_fetch_array($result);
         mysqli_close($connect);
         if (mysqli_num_rows($result) == 0) {
